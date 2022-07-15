@@ -1,0 +1,10 @@
+--- tasks.json ---
+터미널 -> 작업 구성 -> 템플릿에서 tasks.json 파일 만들기 -> Others 선택
+
+--- c_cpp_properties.json ---
+F1 -> c/c++ edit -> configuration(JSON)
+// 터미널 -> 기본 빌드 작업 구성(Ctrl + Shift +B)
+
+--- settings.json --- 
+"C_Cpp.errorSquiggles": "Disabled"
+오류 표시 생략 하는 코드
