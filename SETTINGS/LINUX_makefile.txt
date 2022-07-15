@@ -1,0 +1,15 @@
+
+ CPP = g++
+ CXXFLAGS = -Wall -O2
+ OBJS = Point_ava.o Point_Main.o
+
+ test : $(OBJS)
+         $(CPP) $(OBJS) -o test
+ Point_ava.o : Point_ava.cpp Point.h
+         $(CPP) -c Point_ava.cpp
+ Point_Main.o : Point_Main.cpp Point.h
+         $(CPP) -c Point_Main.cpp
+ clean:
+         rm -f $(OBJS) test
+
+gcc -c == 오브젝트 파일 생성
