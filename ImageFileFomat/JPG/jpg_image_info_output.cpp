@@ -37,12 +37,17 @@ void main() {
 
 	fread(&jfifheader, sizeof(jfifheader), 1, fp);
 
+	/////////////////////
+	// JFIF IDENTIFIER //
+	/////////////////////
+
 	std::string strIden;
 	printf("JFIF IDENTIFIER = ");
 	for (int i = 0; i < sizeof(jfifheader.Identifier); i++) {
 		strIden.push_back(jfifheader.Identifier[i]);
 	}
 	std::cout << strIden << "\n";
+
 	//////////////////
 	// JFIF VERSION //
 	//////////////////
