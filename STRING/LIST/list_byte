@@ -1,0 +1,87 @@
+#pragma warning(disable:4996)
+
+#include <iostream>
+#include <cstdio>
+#include <string>
+#include <Windows.h>
+#include <list>
+#include <iterator>
+
+#define SEND_DATA_LEN		1024
+
+// ex) C:\\test\\Butter.mp3 -> Butter.mp3
+std::string strFIlePathSubstrPure(std::string strTemp) {
+
+	int pos;
+
+	pos = strTemp.rfind('\\');
+	std::string second = strTemp.substr(pos + 1);
+	return second;
+}
+
+// ex) C:\\test\\Butter.mp3 -> C:\\test\\Butter
+std::string strFileFormatDotSubstr(std::string strTemp) {
+
+	int pos;
+
+	pos = strTemp.rfind('.');
+	std::string first = strTemp.substr(0, pos);
+	return  first;
+}
+
+
+int main() {
+	
+	std::string strPath = "C:\\test\\Butter.mp3";
+	// std::string strPath = "C:\\test\\aespa - Girls.mp3";
+	FILE* fp = fopen(strPath.c_str(), "rb");
+
+	fseek(fp, 0, SEEK_END);
+	int len = ftell(fp);
+	fseek(fp, 0, SEEK_SET);
+	
+	std::string writeStr = strFileFormatDotSubstr(strPath);
+	std::string totalStr = writeStr + "_test.mp3";
+	FILE* wfp = fopen(totalStr.c_str(), "wb");
+
+	int quotient = len / (SEND_DATA_LEN - 1);
+	int remainder = len % (SEND_DATA_LEN - 1);
+
+	// fseek(fp, quotient * (SEND_DATA_LEN - 1), SEEK_CUR);
+
+	std::list<BYTE> serial;
+	std::list<BYTE>::iterator it;
+
+	BYTE data[SEND_DATA_LEN+3]{};
+	
+	data[0] = 0xAA;
+	data[1] = (byte)(((SEND_DATA_LEN + 3) >> 8) & 0xFF);
+	data[2] = (byte)((SEND_DATA_LEN + 3) & 0xFF);
+	data[3] = 0xC1;
+
+	fread(&data[4], SEND_DATA_LEN - 1, 1, fp);
+
+	for (int i = 0; i < SEND_DATA_LEN + 3; i++) {
+		serial.push_back(data[i]);
+	}
+	serial.push_back(0xBB);
+
+	int list_size = serial.size();
+	BYTE* pC1_Data = new BYTE[list_size];
+
+	for (int i = 0; i < list_size; i++) {
+		pC1_Data[i] = serial.front();
+		serial.pop_front();
+	}
+
+	for (int i = 0; i < list_size; i++) {
+		printf("%02X ", pC1_Data[i]);
+	}
+
+
+
+	fclose(fp);
+	fclose(wfp);
+	
+	return 0;
+}
