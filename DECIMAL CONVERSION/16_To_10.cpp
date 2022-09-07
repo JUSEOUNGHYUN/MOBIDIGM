@@ -35,15 +35,15 @@ int main() {
 	data[3] = (byte)(FileSize & 0xFF);
 
 	// ****************************** Hexadecimal To Decimal Method 1 ******************************
-	int a = (int)((data[1] << 24) & 0xFF000000);
-	int b = (int)((data[2] << 16) & 0xFF0000);
-	int c = (int)((data[3] << 8) & 0xFF00);
-	int d = (int)(data[4] & 0xFF);
+	int a = (int)((data[0] << 24) & 0xFF000000);
+	int b = (int)((data[1] << 16) & 0xFF0000);
+	int c = (int)((data[2] << 8) & 0xFF00);
+	int d = (int)(data[3] & 0xFF);
 	int TotalLen = a + b + c + d;
 	std::cout << TotalLen << "\n"; // Decimal
 
 	//****************************** Hexadecimal To Decimal Method 2 ******************************
-	int SendLength = (int)((data[1] << 24) & 0xFF000000) + (int)((data[2] << 16) & 0xFF0000) + (int)((data[3] << 8) & 0xFF00) + (int)(data[4] & 0xFF);
+	int SendLength = (int)((data[0] << 24) & 0xFF000000) + (int)((data[1] << 16) & 0xFF0000) + (int)((data[2] << 8) & 0xFF00) + (int)(data[3] & 0xFF);
 	std::cout << SendLength << "\n"; // Decimal
 
 	return 0;
