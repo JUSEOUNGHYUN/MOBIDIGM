@@ -1,0 +1,11 @@
+gcc -c == 오브젝트 파일 생성
+
+
+*** C언어 ***
+- gcc test.c -o test
+./test
+
+
+*** C++ ***
+- g++ test.cpp -o test
+./test
